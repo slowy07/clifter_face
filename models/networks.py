@@ -6,6 +6,9 @@ import numpy as np
 from torchvision import transforms
 import torch.nn.functional as F
 
+###############################################################################
+# Functions
+###############################################################################
 def weights_init(m):
     classname = m.__class__.__name__
     if classname.find('Conv') != -1:
@@ -101,6 +104,9 @@ def print_network(net):
     print(net)
     print('Total number of parameters: %d' % num_params)
 
+##############################################################################
+# Losses
+##############################################################################
 class GANLoss(nn.Module):
     def __init__(self, gan_mode, target_real_label=1.0, target_fake_label=0.0,
                  tensor=torch.FloatTensor, opt=None):
@@ -199,7 +205,9 @@ class VGGLoss(nn.Module):
             loss += self.weights[i] * self.criterion(x_vgg[i], y_vgg[i].detach())        
         return loss
 
-
+##############################################################################
+# Generator
+##############################################################################
 class LocalEnhancer(nn.Module):
     def __init__(self, input_nc, output_nc, ngf=32, n_downsample_global=3, n_blocks_global=9, 
                  n_local_enhancers=1, n_blocks_local=3, norm_layer=nn.BatchNorm2d, padding_type='reflect'):        
